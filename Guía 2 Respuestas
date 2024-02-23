@@ -1,0 +1,79 @@
+SELECT DISTINCT c.*
+FROM cliente c
+JOIN pedido p ON c.id_cliente = p.id_cliente;
+
+SELECT *
+FROM pedido
+WHERE fecha_registro BETWEEN '2024-02-01' AND '2024-03-01';
+
+SELECT *
+FROM cliente
+ORDER BY nacimiento_cliente DESC;
+
+SELECT p.*
+FROM producto p
+JOIN detalle_pedido dp ON p.id_producto = dp.id_producto
+WHERE dp.id_pedido = '6';
+
+SELECT *
+FROM producto
+ORDER BY precio_producto DESC
+LIMIT 1;
+
+SELECT AVG(precio_producto) AS promedio_precios
+FROM producto;
+
+SELECT COUNT(*) AS pendientes
+FROM pedido
+WHERE estado_pedido = 'Pendiente';
+
+SELECT COUNT(*) AS finalizados
+FROM pedido
+WHERE estado_pedido = 'Finalizado';}
+
+SELECT COUNT(*) AS entregados
+FROM pedido
+WHERE estado_pedido = 'Entregado';
+
+SELECT COUNT(*) AS anulados
+FROM pedido
+WHERE estado_pedido = 'Anulado';
+
+SELECT *
+FROM cliente
+WHERE nombre_cliente LIKE 'D%';
+
+SELECT id_cliente, COUNT(*) AS cantidad_ordenes
+FROM pedido
+WHERE fecha_registro = '2024-04-23'
+GROUP BY id_cliente
+ORDER BY cantidad_ordenes DESC;
+
+SELECT id_producto, COUNT(*) AS total_ventas
+FROM detalle_pedido
+GROUP BY id_producto
+ORDER BY total_ventas DESC
+LIMIT 3;
+
+SELECT id_cliente, COUNT(*) AS total_pedidos
+FROM pedido
+GROUP BY id_cliente
+ORDER BY total_pedidos DESC
+LIMIT 1;
+
+SELECT
+    pedido.id_pedido, 
+    cliente.id_cliente, 
+    cliente.nombre_cliente, 
+    pedido.direccion_pedido, 
+    pedido.estado_pedido, 
+    pedido.fecha_registro, 
+    detalle_pedido.id_detalle, 
+    producto.nombre_producto, 
+    detalle_pedido.cantidad_producto, 
+    producto.precio_producto
+FROM
+    pedido
+INNER JOIN cliente ON pedido.id_cliente = cliente.id_cliente
+INNER JOIN detalle_pedido ON pedido.id_pedido = detalle_pedido.id_pedido
+INNER JOIN producto ON detalle_pedido.id_producto = producto.id_producto;
